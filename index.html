@@ -5,16 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agro-RaDa Export</title>
     
-    <!-- Подключение шрифта Montserrat из Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Подключение Font Awesome CDN для иконок -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
     <style>
-        /* Базовые стили и обнуление */
+        /* ----- БАЗОВЫЕ СТИЛИ (ваши, без изменений) ----- */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -27,7 +24,7 @@
 
         body {
             font-family: 'Montserrat', sans-serif;
-            color: #4A3F35; /* Мягкий коричневый */
+            color: #4A3F35;
             background-color: #FFFFFF;
             line-height: 1.6;
         }
@@ -41,14 +38,12 @@
             color: inherit;
         }
 
-        /* Ограничитель ширины контента */
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
 
-        /* Секции общего назначения */
         section {
             padding: 80px 0;
         }
@@ -65,7 +60,7 @@
             display: block;
             width: 60px;
             height: 3px;
-            background-color: #D4A017; /* Тёплый золотой */
+            background-color: #D4A017;
             margin: 15px auto 0 auto;
             border-radius: 2px;
         }
@@ -79,7 +74,7 @@
             opacity: 0.9;
         }
 
-        /* Шапка сайта (Sticky Header) */
+        /* ----- ШАПКА ----- */
         .header {
             position: fixed;
             top: 0;
@@ -101,7 +96,7 @@
         .logo {
             font-size: 1.3rem;
             font-weight: 700;
-            color: #2E7D32; /* Благородный зелёный */
+            color: #2E7D32;
         }
 
         .logo span {
@@ -124,10 +119,9 @@
             color: #2E7D32;
         }
 
-        /* Блок 1 — Шапка (Hero) */
+        /* ----- HERO (Главная) ----- */
         .hero {
             padding: 170px 0 100px 0;
-            /* Красивое качественное фото поля на закате с Unsplash */
             background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), 
                         url('https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
             color: #FFFFFF;
@@ -156,7 +150,6 @@
             flex-wrap: wrap;
         }
 
-        /* Кнопки */
         .btn {
             display: inline-flex;
             align-items: center;
@@ -194,59 +187,166 @@
             background-color: #B88A12;
         }
 
-        /* Блок 2 — О нас (About) */
+        /* ----- О НАС (About) — НОВЫЕ 4 ОКОШКА ----- */
         .about-section {
-            background-color: #F5F1EB; /* Приглушённый бежевый/кремовый */
+            background-color: #F5F1EB;
         }
 
-        .steps-container {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+        /* Сетка из 4 окошек */
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
             margin-top: 40px;
         }
 
-        .step-card {
+        /* Карточка процесса с фото при наведении */
+        .process-card {
+            position: relative;
             background-color: #FFFFFF;
-            border-radius: 12px;
-            padding: 25px;
-            display: flex;
-            align-items: flex-start;
-            gap: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            border-radius: 16px;
+            padding: 30px 20px 25px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .step-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-        }
-
-        .step-num {
-            background-color: #2E7D32;
-            color: #FFFFFF;
-            min-width: 45px;
-            height: 45px;
-            border-radius: 50%;
+            overflow: hidden;
+            min-height: 220px;
             display: flex;
-            align-items: center;
+            flex-direction: column;
             justify-content: center;
-            font-weight: 700;
-            font-size: 1.2rem;
+            align-items: center;
+            cursor: pointer;
+            border: 1px solid #EFEBE4;
         }
 
-        .step-content h3 {
-            font-size: 1.15rem;
+        .process-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        /* Фоновое изображение (скрыто) */
+        .process-card .card-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            border-radius: 16px;
+            z-index: 0;
+        }
+
+        /* При наведении — показываем фото */
+        .process-card:hover .card-bg {
+            opacity: 1;
+        }
+
+        /* Затемнение фона */
+        .process-card:hover .card-bg::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.45);
+            border-radius: 16px;
+        }
+
+        /* Контент поверх фона */
+        .process-card .card-content {
+            position: relative;
+            z-index: 1;
+            transition: color 0.3s ease;
+        }
+
+        .process-card .card-content i {
+            font-size: 2.6rem;
+            color: #2E7D32;
+            margin-bottom: 15px;
+            display: inline-block;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .process-card:hover .card-content i {
+            color: #D4A017;
+            transform: scale(0.95);
+        }
+
+        .process-card .card-content h3 {
+            font-size: 1.1rem;
             margin-bottom: 8px;
             color: #2E7D32;
         }
 
-        .step-content p {
-            font-size: 0.95rem;
+        .process-card .card-content p {
+            font-size: 0.9rem;
             color: #5A4F43;
+            margin: 0;
         }
 
-        /* Блок 3 — Продукция (Products) */
+        .process-card:hover .card-content h3,
+        .process-card:hover .card-content p,
+        .process-card:hover .card-content i {
+            color: #FFFFFF !important;
+        }
+
+        /* ----- СЕКЦИЯ "В ПРОДАЖЕ" (добавлена в О нас) ----- */
+        .for-sale-section {
+            margin-top: 50px;
+            padding-top: 40px;
+            border-top: 2px solid #EFEBE4;
+        }
+
+        .for-sale-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .for-sale-item {
+            background-color: #FFFFFF;
+            border-radius: 12px;
+            padding: 30px 20px;
+            text-align: center;
+            border: 2px dashed #D4A017;
+            min-height: 160px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: border-color 0.3s ease, background-color 0.3s ease;
+        }
+
+        .for-sale-item:hover {
+            border-color: #2E7D32;
+            background-color: #F9F7F4;
+        }
+
+        .for-sale-item i {
+            font-size: 2.8rem;
+            color: #D4A017;
+            margin-bottom: 15px;
+        }
+
+        .for-sale-item p {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #4A3F35;
+        }
+
+        .for-sale-item .placeholder-text {
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: #8A7F73;
+            margin-top: 5px;
+        }
+
+        /* ----- ПРОДУКЦИЯ (оставлена ваша структура) ----- */
         .products-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -269,8 +369,7 @@
             box-shadow: 0 8px 25px rgba(0,0,0,0.08);
         }
 
-        /* Стилизация иконок по ТЗ */
-        .icon-box {
+        .product-card .icon-box {
             font-size: 2.5rem;
             color: #2E7D32;
             margin-bottom: 20px;
@@ -278,11 +377,9 @@
             transition: transform 0.2s ease, color 0.2s ease;
         }
 
-        .product-card:hover .icon-box,
-        .quality-card:hover .icon-box,
-        .social-link:hover {
-            color: #D4A017; /* Смена цвета на золотой при наведении */
-            transform: scale(0.95); /* Прожатие */
+        .product-card:hover .icon-box {
+            color: #D4A017;
+            transform: scale(0.95);
         }
 
         .product-card h3 {
@@ -302,37 +399,7 @@
             border-left: 5px solid #2E7D32;
         }
 
-        /* Блок 4 — Качество (Quality) */
-        .quality-section {
-            background-color: #F5F1EB;
-        }
-
-        .quality-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-        }
-
-        .quality-card {
-            background-color: #FFFFFF;
-            border-radius: 12px;
-            padding: 35px 25px;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .quality-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.06);
-        }
-
-        .quality-card h3 {
-            font-size: 1.15rem;
-            margin-bottom: 10px;
-        }
-
-        /* Блок 5 — Контакты (Contacts) */
+        /* ----- КОНТАКТЫ (обновлены телефоны и директоры) ----- */
         .contacts-wrapper {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -340,7 +407,6 @@
             margin-top: 20px;
         }
 
-        /* Форма */
         .contact-form {
             display: flex;
             flex-direction: column;
@@ -375,12 +441,11 @@
             min-height: 120px;
         }
 
-        /* Информационная колонка контактов */
         .contacts-info {
             display: flex;
             flex-direction: column;
             justify-content: center;
-            gap: 30px;
+            gap: 25px;
         }
 
         .info-item {
@@ -397,7 +462,7 @@
         }
 
         .info-text h4 {
-            font-size: 1rem;
+            font-size: 0.85rem;
             margin-bottom: 2px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -406,13 +471,20 @@
         }
 
         .info-text p {
-            font-size: 1.1rem;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .info-text .sub-text {
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: #6A5F53;
         }
 
         .social-links {
             display: flex;
             gap: 20px;
-            margin-top: 10px;
+            margin-top: 5px;
         }
 
         .social-link {
@@ -422,7 +494,18 @@
             transition: transform 0.2s ease, color 0.2s ease;
         }
 
-        /* Футер */
+        .social-link:hover {
+            color: #D4A017;
+            transform: scale(0.95);
+        }
+
+        .location-text {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #4A3F35;
+        }
+
+        /* ----- ФУТЕР ----- */
         .footer {
             background-color: #4A3F35;
             color: #F5F1EB;
@@ -432,10 +515,15 @@
             font-weight: 600;
         }
 
-        /* Мобильная адаптивность */
+        /* ----- АДАПТИВНОСТЬ ----- */
         @media (max-width: 992px) {
-            .products-grid, 
-            .quality-grid {
+            .process-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .for-sale-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
             .contacts-wrapper {
@@ -449,19 +537,19 @@
 
         @media (max-width: 768px) {
             .nav-menu {
-                display: none; /* Упрощение для чистой верстки без громоздких JS-бургер-меню */
+                display: none;
             }
             .header-container {
                 justify-content: center;
             }
-            .products-grid, 
-            .quality-grid {
+            .process-grid {
                 grid-template-columns: 1fr;
             }
-            .step-card {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            .for-sale-grid {
+                grid-template-columns: 1fr;
             }
             .hero h1 {
                 font-size: 1.9rem;
@@ -477,7 +565,7 @@
 </head>
 <body>
 
-    <!-- Шапка сайта (Sticky Header) -->
+    <!-- ===== ШАПКА ===== -->
     <header class="header">
         <div class="container header-container">
             <a href="#" class="logo">Agro-RaDa <span>Export</span></a>
@@ -485,21 +573,19 @@
                 <ul class="nav-menu">
                     <li><a href="#about" class="nav-link">О нас</a></li>
                     <li><a href="#products" class="nav-link">Продукция</a></li>
-                    <li><a href="#quality" class="nav-link">Качество</a></li>
                     <li><a href="#contacts" class="nav-link">Контакты</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <!-- Блок 1 — Шапка (Hero) -->
-    <section class="hero">
+    <!-- ===== HERO (Главная) ===== -->
+    <section class="hero" id="home">
         <div class="container">
             <h1>Производитель зерновых и бобовых культур</h1>
             <p>Экспорт сельхозпродукции из Казахстана в Турцию. Прямые поставки без посредников.</p>
             <div class="hero-buttons">
                 <a href="#contacts" class="btn btn-green">Запросить цену</a>
-                <!-- ЗАГЛУШКА: Замените номер телефона в ссылке ниже на ваш реальный номер (в формате без плюса) -->
                 <a href="https://wa.me/77756677839" target="_blank" class="btn btn-gold">
                     <i class="fab fa-whatsapp"></i> Написать в WhatsApp
                 </a>
@@ -507,137 +593,131 @@
         </div>
     </section>
 
-    <!-- Блок 2 — О нас (About) -->
+    <!-- ===== О НАС (About) ===== -->
     <section id="about" class="about-section">
         <div class="container">
             <h2 class="section-title">Agro-RaDa Export — производитель и экспортёр</h2>
             <p class="section-subtitle">Мы производители зерновых и бобовых культур, выращиваем и отгружаем продукцию из экологически чистого региона Северного Казахстана. Контроль качества на каждом этапе: от поля до контейнера.</p>
-            
-            <div class="steps-container">
-                <!-- Этап 1 -->
-                <div class="step-card">
-                    <div class="step-num">1</div>
-                    <div class="step-content">
+
+            <!-- 4 окошка процессов -->
+            <div class="process-grid">
+
+                <div class="process-card">
+                    <div class="card-bg" style="background-image: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=600&q=80');"></div>
+                    <div class="card-content">
+                        <i class="fa-solid fa-flask"></i>
                         <h3>Анализ почвы и подготовка</h3>
-                        <p>Мы начинаем каждый сезон с детального агрохимического анализа почвы. Определяем содержание гумуса, макро- и микроэлементов, уровень pH. На основе этих данных составляем план питания для каждого поля. Проводим зяблевую вспашку, выравнивание и внесение органических удобрений, чтобы создать идеальное "ложе" для семян.</p>
+                        <p>Детальный агрохимический анализ и подготовка поля</p>
                     </div>
                 </div>
-                <!-- Этап 2 -->
-                <div class="step-card">
-                    <div class="step-num">2</div>
-                    <div class="step-content">
+
+                <div class="process-card">
+                    <div class="card-bg" style="background-image: url('https://images.unsplash.com/photo-1592982537447-7440770cbfc9?auto=format&fit=crop&w=600&q=80');"></div>
+                    <div class="card-content">
+                        <i class="fa-solid fa-seedling"></i>
                         <h3>Селекция и посев</h3>
-                        <p>Используем только районированные высокоурожайные сорта, адаптированные к климату Северного Казахстана. Соблюдаем оптимальные сроки сева и норму высева. Работаем современными посевными комплексами, обеспечивающими равномерную заделку семян на заданную глубину.</p>
+                        <p>Районированные сорта и современная техника</p>
                     </div>
                 </div>
-                <!-- Этап 3 -->
-                <div class="step-card">
-                    <div class="step-num">3</div>
-                    <div class="step-content">
+
+                <div class="process-card">
+                    <div class="card-bg" style="background-image: url('https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?auto=format&fit=crop&w=600&q=80');"></div>
+                    <div class="card-content">
+                        <i class="fa-solid fa-shield-halved"></i>
                         <h3>Уход и защита</h3>
-                        <p>В период роста мы обеспечиваем бережный уход: регулярный мониторинг состояния посевов, интегрированную защиту от сорняков, вредителей и болезней. Используем только сертифицированные средства защиты растений, строго соблюдая сроки ожидания. При необходимости проводим листовые подкормки для раскрытия потенциала сорта.</p>
+                        <p>Интегрированная защита от сорняков и вредителей</p>
                     </div>
                 </div>
-                <!-- Этап 4 -->
-                <div class="step-card">
-                    <div class="step-num">4</div>
-                    <div class="step-content">
+
+                <div class="process-card">
+                    <div class="card-bg" style="background-image: url('https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=600&q=80');"></div>
+                    <div class="card-content">
+                        <i class="fa-solid fa-wheat-awn"></i>
                         <h3>Сбор урожая</h3>
-                        <p>Уборка проводится в оптимальные фазы влажности зерна напрямую или раздельным способом. Это позволяет сохранить цвет, целостность и высокое содержание протеина. После уборки продукция сразу отправляется на первичную подработку.</p>
+                        <p>Уборка в оптимальные фазы влажности</p>
                     </div>
                 </div>
-                <!-- Этап 5 -->
-                <div class="step-card">
-                    <div class="step-num">5</div>
-                    <div class="step-content">
-                        <h3>Логистика и отгрузка</h3>
-                        <p>Подработанное зерно проходит финальный контроль качества в лаборатории. Далее мы готовим партию к отгрузке: затариваем в мешки, маркируем и оформляем полный пакет документов. Поставка осуществляется на условиях FOB Актау, CFR Мерсин или CIF Мерсин — автомобильным и морским транспортом через порты на Каспии.</p>
+
+            </div>
+
+            <!-- ===== СЕКЦИЯ "В ПРОДАЖЕ" ===== -->
+            <div class="for-sale-section">
+                <h3 style="text-align: center; font-size: 1.6rem; color: #2E7D32; margin-bottom: 10px;">
+                    <i class="fa-solid fa-tag" style="color: #D4A017; margin-right: 10px;"></i>В продаже
+                </h3>
+                <p style="text-align: center; max-width: 700px; margin: 0 auto 20px auto; font-size: 1rem; opacity: 0.8;">
+                    Здесь будут появляться фото и видео доступных партий продукции.
+                </p>
+
+                <div class="for-sale-grid">
+                    <div class="for-sale-item">
+                        <i class="fa-regular fa-image"></i>
+                        <p>Фото товара</p>
+                        <span class="placeholder-text">(будет добавлено)</span>
+                    </div>
+                    <div class="for-sale-item">
+                        <i class="fa-regular fa-image"></i>
+                        <p>Фото товара</p>
+                        <span class="placeholder-text">(будет добавлено)</span>
+                    </div>
+                    <div class="for-sale-item">
+                        <i class="fa-regular fa-circle-play"></i>
+                        <p>Видео обзор</p>
+                        <span class="placeholder-text">(будет добавлено)</span>
                     </div>
                 </div>
             </div>
+
         </div>
     </section>
 
-    <!-- Блок 3 — Продукция (Products) -->
+    <!-- ===== ПРОДУКЦИЯ ===== -->
     <section id="products">
         <div class="container">
             <h2 class="section-title">Наша продукция</h2>
-            <p class="section-subtitle">Широкий ассортимент качественных культур, выращенных с заботой о земле и строгим соблюдением стандартов.</p>
+            <p class="section-subtitle">Широкий ассортимент качественных культур, выращенных с заботой о земле.</p>
             
             <div class="products-grid">
-                <!-- Карточка 1 -->
                 <div class="product-card">
                     <div class="icon-box"><i class="fa-solid fa-seedling"></i></div>
                     <h3>Пшеница (Wheat)</h3>
                 </div>
-                <!-- Карточка 2 -->
                 <div class="product-card">
                     <div class="icon-box"><i class="fa-solid fa-leaf"></i></div>
                     <h3>Чечевица (Lentils)</h3>
                 </div>
-                <!-- Карточка 3 -->
                 <div class="product-card">
                     <div class="icon-box"><i class="fa-solid fa-canadian-maple-leaf"></i></div>
                     <h3>Лён (Flax)</h3>
                 </div>
-                <!-- Карточка 4 -->
                 <div class="product-card">
                     <div class="icon-box"><i class="fa-solid fa-sun"></i></div>
                     <h3>Рапс (Rapeseed)</h3>
                 </div>
-                <!-- Карточка 5 -->
-                <div class="product-card">
-                    <div class="icon-box"><i class="fa-solid fa-circle"></i></div>
-                    <h3>Горох (Peas)</h3>
-                </div>
-                <!-- Карточка 6 -->
                 <div class="product-card">
                     <div class="icon-box"><i class="fa-solid fa-wheat-awn"></i></div>
                     <h3>Ячмень (Barley)</h3>
                 </div>
+                <div class="product-card">
+                    <div class="icon-box"><i class="fa-solid fa-circle"></i></div>
+                    <h3>Горох (Peas)</h3>
+                </div>
             </div>
 
             <div class="product-info-block">
-                Общая площадь наших посевов составляет 5 000 гектаров. Благодаря плодородной земле и строгому соблюдению агротехнологий средняя урожайность достигает 25–30 центнеров с гектара.
+                Общая площадь посевов — 5 000 гектаров. Средняя урожайность: 25–30 ц/га.
             </div>
         </div>
     </section>
 
-    <!-- Блок 4 — Качество (Quality) -->
-    <section id="quality" class="quality-section">
-        <div class="container">
-            <h2 class="section-title">Качество и сертификаты</h2>
-            <p class="section-subtitle">Мы гарантируем соответствие продукции международным стандартам и предоставляем полный пакет документов.</p>
-            
-            <div class="quality-grid">
-                <!-- Качество 1 -->
-                <div class="quality-card">
-                    <div class="icon-box"><i class="fa-solid fa-certificate"></i></div>
-                    <h3>Сертификат происхождения</h3>
-                </div>
-                <!-- Качество 2 -->
-                <div class="quality-card">
-                    <div class="icon-box"><i class="fa-solid fa-shield-halved"></i></div>
-                    <h3>Фитосанитарный сертификат</h3>
-                </div>
-                <!-- Качество 3 -->
-                <div class="quality-card">
-                    <div class="icon-box"><i class="fa-solid fa-flask-vial"></i></div>
-                    <h3>Протокол испытаний</h3>
-                    <p style="font-size: 0.9rem; font-weight:600; color: #2E7D32; margin-top: 5px;">протеин 24-26%</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Блок 5 — Контакты (Contacts) -->
+    <!-- ===== КОНТАКТЫ ===== -->
     <section id="contacts">
         <div class="container">
             <h2 class="section-title">Свяжитесь с нами</h2>
-            <p class="section-subtitle">Оставьте заявку или свяжитесь удобным для вас способом для обсуждения объёмов поставок и стоимости.</p>
+            <p class="section-subtitle">Оставьте заявку или свяжитесь удобным способом для обсуждения поставок.</p>
             
             <div class="contacts-wrapper">
-                <!-- Левая колонка: Форма -->
+                <!-- Форма -->
                 <form class="contact-form" id="agroForm">
                     <div class="form-group">
                         <input type="text" placeholder="Ваше имя" required>
@@ -657,51 +737,65 @@
                     <button type="submit" class="btn btn-green" style="align-self: flex-start;">Отправить</button>
                 </form>
 
-                <!-- Правая колонка: Контакты -->
+                <!-- Контакты -->
                 <div class="contacts-info">
+
+                    <!-- Директоры -->
+                    <div class="info-item">
+                        <i class="fa-solid fa-user-tie"></i>
+                        <div class="info-text">
+                            <h4>Directors</h4>
+                            <p>Tleubergenov Zhandos<br>+7 (775) 667-78-39</p>
+                            <p style="margin-top: 4px;">Tleubergenov Askar<br>+7 (771) 474-48-01</p>
+                        </div>
+                    </div>
+
+                    <!-- Email -->
                     <div class="info-item">
                         <i class="fa-solid fa-envelope"></i>
                         <div class="info-text">
                             <h4>Email</h4>
-                            <!-- ЗАГЛУШКА: Замените на реальный email -->
-                            <p>zernoex2014@mail.ru</p> 
+                            <p>zernoex2014@mail.ru</p>
                         </div>
                     </div>
-                    <div class="info-item">
-                        <i class="fa-solid fa-phone"></i>
-                        <div class="info-text">
-                            <h4>Телефон</h4>
-                            <!-- ЗАГЛУШКА: Замените на реальный телефон -->
-                            <p>+7 (775) 667-78-39</p>
-                        </div>
-                    </div>
-                    <div class="info-item" style="flex-direction: column; align-items: flex-start; gap: 10px;">
-                        <h4 style="color: #2E7D32; font-weight:700; font-size:1rem; letter-spacing:0.5px;">МЕССЕНДЖЕРЫ</h4>
+
+                    <!-- Мессенджеры -->
+                    <div class="info-item" style="flex-direction: column; align-items: flex-start; gap: 8px;">
+                        <h4 style="color: #2E7D32; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.5px; text-transform: uppercase;">МЕССЕНДЖЕРЫ</h4>
                         <div class="social-links">
-                            <!-- ЗАГЛУШКА: Замените номера в ссылках ниже на ваши мессенджеры -->
                             <a href="https://wa.me/77756677839" target="_blank" class="social-link"><i class="fab fa-whatsapp"></i></a>
                             <a href="https://t.me/zhandos_tl" target="_blank" class="social-link"><i class="fab fa-telegram"></i></a>
                         </div>
                     </div>
+
+                    <!-- Местоположение -->
+                    <div class="info-item">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <div class="info-text">
+                            <h4>Местоположение</h4>
+                            <p class="location-text">North Kazakhstan, Petropavl, Afonkino village</p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Футер -->
+    <!-- ===== ФУТЕР ===== -->
     <footer class="footer">
         <div class="container">
             <p>&copy; 2026 Agro-RaDa Export. Все права защищены.</p>
         </div>
     </footer>
 
-    <!-- Простой JavaScript для обработки формы -->
     <script>
         document.getElementById('agroForm').addEventListener('submit', function(e) {
-            e.preventDefault(); // Предотвращаем перезагрузку страницы
+            e.preventDefault();
             alert('Сообщение отправлено! Спасибо!');
-            this.reset(); // Очищаем поля формы
+            this.reset();
         });
     </script>
+
 </body>
 </html>
